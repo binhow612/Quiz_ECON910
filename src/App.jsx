@@ -411,18 +411,18 @@ Provide a concise, clear, and academic explanation in English. Address the user'
                 <div key={q.id} className="border border-slate-200 rounded-xl p-5 bg-slate-50/30 shadow-sm transition hover:shadow-md">
                   <div className="flex items-start justify-between gap-2 mb-4">
                     <h4 className="font-bold text-slate-800 text-sm leading-snug text-left">
-                      <span className="text-teal-700 mr-1">Q{q.id}:</span> {q.q}
+                      <span className="text-teal-700 mr-1">Q{q.id}:</span> {q.question}
                     </h4>
                     <span className="text-[10px] bg-slate-200 text-slate-600 font-semibold px-2 py-1 rounded whitespace-nowrap">Topic {Math.ceil(q.id/20)}</span>
                   </div>
 
                   <div className="space-y-2">
-                    {q.opts.map((opt, optIdx) => {
+                    {q.options.map((opt, optIdx) => {
                       let btnClass = "w-full text-left border rounded-lg p-3 text-xs cursor-pointer transition flex items-start space-x-2 ";
                       
                       if (isAnswered) {
                         if (quizMode === 'practice') {
-                          if (optIdx === q.c) btnClass += "border-green-500 bg-green-50 font-semibold";
+                          if (optIdx === q.correct) btnClass += "border-green-500 bg-green-50 font-semibold";
                           else if (userSel === optIdx) btnClass += "border-red-400 bg-red-50";
                           else btnClass += "border-slate-200 bg-white opacity-60";
                         } else {
@@ -435,9 +435,9 @@ Provide a concise, clear, and academic explanation in English. Address the user'
 
                       return (
                         <button key={optIdx} onClick={() => handleAnswerSelect(q.id, optIdx)} className={btnClass} disabled={examSubmitted || (quizMode === 'practice' && isAnswered)}>
-                          {quizMode === 'practice' && isAnswered && optIdx === q.c && <CheckCircle2 size={16} className="text-green-600 shrink-0" />}
-                          {quizMode === 'practice' && isAnswered && userSel === optIdx && optIdx !== q.c && <XCircle size={16} className="text-red-500 shrink-0" />}
-                          {(!isAnswered || quizMode === 'exam' || (isAnswered && quizMode === 'practice' && optIdx !== q.c && userSel !== optIdx)) && (
+                          {quizMode === 'practice' && isAnswered && optIdx === q.correct && <CheckCircle2 size={16} className="text-green-600 shrink-0" />}
+                          {quizMode === 'practice' && isAnswered && userSel === optIdx && optIdx !== q.correct && <XCircle size={16} className="text-red-500 shrink-0" />}
+                          {(!isAnswered || quizMode === 'exam' || (isAnswered && quizMode === 'practice' && optIdx !== q.correct && userSel !== optIdx)) && (
                               <span className="font-bold text-slate-400 shrink-0">{String.fromCharCode(65 + optIdx)}.</span>
                           )}
                           <span className="text-slate-700">{opt.substring(3)}</span>
@@ -453,7 +453,7 @@ Provide a concise, clear, and academic explanation in English. Address the user'
                           <span className="flex items-center gap-1"><BookOpen size={14}/> Explanation:</span>
                           <span className="bg-teal-200 text-teal-900 px-2 py-0.5 rounded text-[10px] uppercase tracking-wider">{q.trap}</span>
                         </div>
-                        <p className="leading-relaxed text-left">{q.exp}</p>
+                        <p className="leading-relaxed text-left">{q.explanation}</p>
                       </div>
 
                       <div className="mt-3">
